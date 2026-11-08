@@ -115,6 +115,14 @@ textarea{width:100%;min-height:160px;font:inherit;font-size:14px;padding:10px;bo
   .tile b{font-size:22px}
   .seg button{padding:7px 8px;font-size:13px}
 }
+.how{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px}
+.how ol{margin:0 0 10px;padding-left:22px;display:grid;gap:6px}
+.how li{padding-left:2px}
+.how .links{display:flex;flex-wrap:wrap;gap:8px}
+a.btn{text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+a.btn.yt{background:#C4302B;border-color:#C4302B;color:#fff}
+.how .pdf{font-size:13.5px;color:var(--muted);margin:0 0 10px}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -594,6 +602,199 @@ const A = [
  ["d12","dia","Dia 12: flor de papel que abre na água",18,"15 min",1,0,"papel tesoura canetinha prato"]
 ];
 
+// Passo a passo resumido (medidas e detalhes: ver a página do PDF). Separador: |
+const S = {
+r01:"Confira se os fios do suporte têm ~1 cm de metal exposto (se não, um adulto descasca)|Afrouxe os 2 parafusos do soquete|Enrole o fio vermelho no parafuso do terminal positivo e aperte|Enrole o fio preto no outro parafuso e aperte|Rosqueie a lâmpada, coloque as pilhas e ligue a chave: acendeu!",
+r02:"Encoste a bateria entre as 'pernas' do LED: a perna mais longa no lado liso (+)|Se não acender, vire a bateria|Prenda as pernas na bateria com fita adesiva|Grude o ímã de neodímio na bateria (passe fita se precisar)|Jogue em superfícies de metal (geladeira, portão) e veja onde gruda",
+r03:"Prenda um conector de anel em cada ponta do fio jumper (adulto ajuda a crimpar)|Ligue o fio vermelho do suporte ao 1º soquete|Use o jumper para ligar o 1º soquete ao 2º|Ligue o fio preto ao 2º soquete|Coloque as lâmpadas e ligue: tire uma lâmpada e veja a outra apagar",
+r04:"Ligue os fios do suporte ao 1º soquete (vermelho no +, preto no −)|Com 2 jumpers, ligue o + do 1º soquete ao + do 2º e o − ao −|Coloque as 2 lâmpadas e ligue|Desrosqueie uma lâmpada: a outra continua acesa (isso é circuito paralelo)",
+r05:"Monte antes o circuito paralelo (projeto 4)|Faça 2 furos no pote (cabeça) para os 'olhos' e encaixe os soquetes por dentro|Fure a lata (corpo) e prenda a cabeça com parafuso e porca|Parafuse os 2 parafusos longos como pernas e cole as arruelas de espuma nos pés|Crimpe uma garra jacaré em cada fio de cobre e encaixe como braços|Coloque o suporte de pilhas dentro da lata e ligue",
+r06:"Encoste a ponta da chave Phillips (ou a esfera) no polo + da pilha|Dobre o fio de cobre em formato de coração/M que toque o topo da pilha|Coloque o ímã sobre a base de metal e a pilha em pé sobre o ímã (− para baixo)|Encaixe o fio no topo e ajuste as 'pernas' para encostarem de leve no ímã|O fio começa a girar sozinho. Não deixe ligado muito tempo: esquenta",
+r07:"Cole o motor vibratório sobre o tripé de pizza|Empilhe as 2 baterias CR2032 (ambas com + para cima) e prenda um fio do motor embaixo|Prenda as canetinhas nas 3 pernas do tripé com fita, tampas tiradas|Cole o olhinho|Para ligar, encoste o outro fio no topo das baterias e prenda com ponto de cola. Solte no papel e veja rabiscar",
+r08:"Cole o motor vibratório embaixo do painel solar e ligue os fios (vermelho com vermelho)|Cole o conjunto em cima do tripé de pizza|Decore com olhos e molas que balançam|Leve ao sol (ou lanterna forte) e veja dançar",
+r09:"Encaixe as rodas no motor com o furo descentralizado (fora do eixo) para dar o pulo|Fixe com cola quente|Cole as hastes de madeira como 'pés' de apoio atrás|Cole a bateria 9V em cima com fita de espuma e encaixe o conector nos fios do motor|Cole os olhos. Ligue: o robô salta",
+r10:"Ligue os 2 painéis em série (vermelho de um no preto do outro) e teste no motor|Cole o astronauta dentro de 2 potinhos de molho (a cápsula)|Prenda os painéis como 'asas' no tubo de papelão com fendas|Monte o cone de papel com alumínio no motor e encaixe a hélice|Endireite o arame do cabide, prenda a nave numa ponta e o contrapeso na outra|Apoie o arame na tampa da garrafa com água e leve ao sol",
+r11:"Corte no pote um retângulo lateral (suporte de pilhas) e um furo no fundo (motor) — adulto corta|Encaixe o motor de eixo duplo e prenda as rodas|Faça as pernas com palitos e rodas finas, presas com parafuso e porca|Ajuste o ângulo das pernas (~60°) para não tombar e cole|Coloque a 'cabeça' (potinho de molho) e pinte de branco e azul",
+r12:"Coloque o LED na protoboard: perna longa (+) numa fileira, curta (−) em outra|Ligue o resistor de 470 Ω entre a perna + e a fileira do + da bateria|Ligue a perna − ao − da bateria com jumper|Conecte a bateria 9V: acende. Nunca ligue LED direto na 9V|Desafio: troque o resistor por 3 de 150 Ω em série e acenda os 3 LEDs",
+r13:"Encaixe o chip 555 no meio da protoboard, com a marquinha virada para o lado indicado no PDF|Coloque resistores, capacitores (perna longa = +) e jumpers seguindo as posições do PDF|Ligue o botão e o fotorresistor|Ligue o alto-falante e a bateria 9V|Aperte o botão e passe a mão sobre o sensor: o som muda",
+r14:"Ligue o motor ao suporte de pilhas|Monte as 'pernas' com palitos, hastes e anéis de vedação (seguir medidas do PDF)|Cole o motor numa base e acople as hastes ao eixo|Cole fita magnética nos pés|Ligue e coloque numa superfície de metal (geladeira): ele 'anda' na vertical",
+r15:"Desenhe o contorno da tigela no papelão e recorte|Faça um furo no meio do papelão e cole o motor vibratório nele|Cole 3 rodízios embaixo do papelão|Cole a tigela virada por cima (motor dentro) e o suporte de pilhas em cima|Cole tiras de tecido em volta: liga e ele 'varre' sozinho",
+r16:"Ligue os 2 painéis em série e teste o motor com hélice|Faça o suporte do motor com o parafuso e porca de trava|Use o 2º parafuso com porcas como lastro embaixo do barco|Cole os painéis sobre os quadrados de isopor no barco|Cole o motor levemente inclinado e coloque na água ao sol",
+r17:"Monte as 2 caixas de redução e coloque pneus nas rodas|Cole abaixadores em 'V' para formar o chassi|Prenda o motor lento com 2 rodas atrás e o rodízio na frente|Prenda o motor rápido de lado, com a roda suspensa um pouquinho acima da mesa|Ligue os 2 motores ao suporte de pilhas|Na beira da mesa o rodízio cai, a roda lateral encosta e o robô vira",
+r18:"Peça a um adulto para furar os palitos (furo grande no centro, pequeno na ponta)|Monte a caixa de engrenagens com eixo longo e encaixe as manivelas|Monte o chassi com palitos duplos e cole o suporte de pilhas|Una pernas e suportes com contrapinos formando um 'M' em cada lado|Trave com anéis de vedação e ligue",
+r19:"Adulto fura 6 palitos (centro e ponta)|Una pernas e suportes pelos furos pequenos com contrapinos|Monte o corpo com palitos e a caixa de engrenagens (eixo longo)|Encaixe as pernas no eixo dos 2 lados, espelhadas|Trave com o-rings e ligue: anda como inseto",
+r20:"Corte 4 espátulas ao meio e fure as pernas (adulto)|Fure o chassi e monte a caixa de engrenagens|Monte o corpo com as peças duplas nas laterais|Cole as espátulas em pares para as pernas|Prenda cada perna ao corpo e às manivelas com contrapinos e o-rings|Ligue e ajuste até andar sem tombar",
+
+e01:"Encha um copo com refrigerante e outro com água (o controle)|Coloque algumas passas em cada copo|Observe: no refrigerante elas sobem e descem 'dançando'",
+e02:"Coloque 1 colher (sopa) de água na garrafa de vidro|Aqueça 1 min no micro-ondas (adulto)|Com luva, tire e apoie no descanso de panela|Estique rápido o balão na boca da garrafa e espere esfriar: o balão é sugado para dentro",
+e03:"Coloque o cartão sobre a boca do jarro com água|Ponha o rolo de papelão em pé sobre o cartão|Equilibre a laranja no rolo|Puxe o cartão rápido para o lado: a laranja cai dentro do jarro",
+e04:"Teste se o sachê boia numa tigela com água|Coloque o sachê na garrafa e encha até a boca|Feche bem e aperte a garrafa: o sachê afunda; solte e ele sobe",
+e05:"Faça ao ar livre|Corte a alcinha que prende a tampa do tubinho|Coloque metade do comprimido efervescente no tubo e ~1/4 de água|Feche, vire de cabeça para baixo no chão e afaste-se: lança!",
+e06:"Dobre o papel toalha, molhe bem e coloque em cada saquinho|Ponha alguns feijões e feche|Deixe um no sol e outro num armário escuro|Observe todo dia e anote por 7 a 10 dias",
+e07:"Encha uma garrafa até 3/4 com água (e miçangas, se tiver)|Coloque a arruela na boca|Encaixe a garrafa vazia de cabeça para baixo por cima e prenda com fita|Vire e gire em círculos: forma um tornado",
+e08:"Misture 2 partes de amido para 1 de água na tigela|Pingue corante|Aperte com força (fica dura) e solte (escorre). Não jogue na pia",
+e09:"Cole a tampa de bico no furo do CD, vedando com fita|Feche a tampa|Encha o balão, torça a ponta e encaixe na tampa|Coloque numa mesa lisa, abra a tampa e dê um peteleco: desliza no ar",
+e10:"Coloque cubos de gelo num copo com água|Encoste o barbante em cima de um cubo|Jogue um pouco de sal por cima e espere 1 minuto|Puxe: o gelo vem grudado no barbante",
+e11:"Adulto acende a vela|Coloque o vinagre no copo e adicione o bicarbonato|Espere borbulhar e incline o copo sobre a chama sem derramar o líquido: o gás apaga a vela",
+e12:"Encha um balão só de ar e passe perto da chama (adulto): estoura|Coloque um pouco de água fria no 2º balão e encha|Segure sobre a chama com a água embaixo: não estoura",
+e13:"Faça ao ar livre|Coloque 1/2 xícara de vinagre no saco zip|Enrole 1 colher de bicarbonato num pedaço de papel higiênico|Jogue o pacotinho no saco, feche rápido e afaste-se: incha até estourar",
+e14:"Adulto prepara água bem quente da torneira|Dissolva sal amargo na água até não dissolver mais|Coloque no pote com o pompom dentro|Deixe na geladeira de um dia para o outro e veja os cristais",
+e15:"Teste se as barras de sabão afundam ou boiam na bacia|Coloque uma barra no prato e no micro-ondas por 1 min, olhando pela porta|Compare as marcas (algumas incham como espuma)|Se cheirar a queimado, desligue",
+e16:"Coloque a garrafa na assadeira|Misture na garrafa detergente, corante e água oxigenada|No saquinho, misture fermento com água morna|Com o funil, despeje o fermento rápido na garrafa: sobe uma espuma enorme",
+e17:"Adulto corta as frutas ao meio|Coloque cada metade na tigela de água: qual boia?|Faça velinhas de papel com palitos e espete nas que boiarem",
+e18:"Encha o saco zip até 3/4 com água e feche|Espete lápis apontados atravessando o saco|Observe: a água não vaza (o plástico 'abraça' o lápis)",
+e19:"Segure o papel e a pedra na mesma altura e solte: a pedra cai antes|Amasse o papel numa bolinha bem apertada|Solte os dois juntos de novo: caem quase juntos",
+e20:"Coloque o dedo na água gelada e conte quanto tempo aguenta|Cubra outro dedo com uma camada grossa de gordura vegetal|Coloque na água de novo e compare o tempo",
+e21:"Coloque um ovo em cada copo com vinagre e corante|Deixe na geladeira por 24 h|Tire com cuidado: a casca sumiu e o ovo fica borrachudo",
+e22:"Desenhe uma seta num papel e cole na parede|Coloque o copo vazio na frente da seta|Encha de água e olhe pelo copo: a seta inverte de lado",
+e23:"Na tigela grande, coloque gelo, água e meça a temperatura|Adicione o sal e meça de novo (fica mais frio)|No saquinho pequeno: leite, açúcar e baunilha, bem fechado|Coloque dentro do saco grande com o gelo com sal e chacoalhe 5 a 10 min|Coma o sorvete!",
+e24:"Encha o pote com água e corante|Complete com óleo (ele fica por cima)|Quebre o comprimido efervescente em 4 e jogue um pedaço|Veja as bolhas subirem e descerem; vá adicionando pedaços",
+e25:"Coloque água no prato fundo|Polvilhe pimenta por toda a superfície|Pingue 1 gota de detergente no meio: a pimenta 'foge' para as bordas",
+e26:"Prepare copos: só água, água com sal, com bicarbonato, com amido, com farinha, e óleo|Coloque um ovo em cada copo|Compare quais afundam e quais boiam",
+e27:"Encha o copo grande quase até em cima com óleo mineral|Nos copinhos, misture água com corantes|Pingue gotas coloridas no óleo com conta-gotas ou colher|Veja as gotas descendo como chuva colorida",
+e28:"Encha o pote com água e misture um pouco de leite|Em ambiente escuro, ilumine de lado com a lanterna: fica azulado|Ilumine de baixo para cima através do pote: fica alaranjado (pôr do sol)",
+e29:"Amarre a colher no meio do barbante|Enrole as pontas do barbante nos dedos indicadores e encoste os dedos nas orelhas|Deixe a colher bater na mesa: soa como um sino",
+e30:"Encaixe a mangueirinha na abertura da lata vazia|Afunde a lata no recipiente com água: ela enche e afunda|Sopre pela mangueira: a lata sobe à superfície",
+e31:"Forre o chão com a lona|Coloque as cartelas de ovos lado a lado, ovos com a ponta para cima|Pise descalço com o pé reto, distribuindo o peso: os ovos aguentam",
+e32:"Coloque água em vários copos|Em cada um, uma substância (sal, açúcar, farinha, óleo...)|Mexa e anote: dissolveu ou não?",
+e33:"Coloque 6 copos em círculo; encha 1 sim, 1 não|Pingue vermelho, amarelo e azul nos cheios|Dobre papel toalha em tiras e ligue cada copo ao vizinho|Espere algumas horas: as cores 'andam' e se misturam nos vazios",
+e34:"Coloque fermento, açúcar e água morna na garrafa|Estique o balão na boca|Deixe a garrafa numa tigela com água morna|Em ~1 hora o balão enche sozinho",
+e35:"Misture sal e pimenta na tigela|Esfregue a colher de plástico no pano por 10 s|Aproxime da mistura sem encostar: a pimenta pula na colher",
+e36:"Desenhe e recorte passarinhos no papel de seda|Encha o balão e esfregue no pano de lã|Aproxime dos passarinhos sem tocar: eles 'voam' até o balão",
+e37:"Coloque cereal no saco zip com água morna e amasse até virar papa|Deixe uns 20 min|Passe o ímã forte por fora do saco, movendo devagar|Observe os pontinhos pretos (ferro) seguindo o ímã",
+e38:"Coloque as pilhas no suporte|Ligue um fio jacaré em cada fio do suporte e teste no LED|Solte um lado e ligue o 3º jacaré no LED|Encoste as 2 pontas livres em objetos da casa: se acender, conduz eletricidade",
+e39:"Crie uma vela com papel, palitos e fita|Prenda no carrinho|Ligue o ventilador/secador atrás e veja até onde vai|Meça a distância e melhore a vela",
+e40:"Prenda o ímã em barra no fundo do potinho com fita|Coloque o potinho para boiar na tigela com água|Espere parar: o lado N aponta para o norte",
+e41:"Faça ao ar livre ou na banheira|Coloque vinagre com corante na garrafa|Enrole o bicarbonato num pedacinho de papel e jogue dentro|Feche rápido e coloque o barco na água deitado: ele anda com o jato",
+e42:"Abra a torneira num fio bem fino|Passe o pente no cabelo seco várias vezes|Aproxime do fio de água sem encostar: a água entorta",
+e43:"Role os limões na mesa e faça 2 cortes em cada (adulto)|Coloque uma moeda de cobre e um prego galvanizado em cada limão|Ligue os limões em série com jacarés: prego de um na moeda do outro|Ligue as pontas no LED: acende fraquinho",
+e44:"Prenda o ímã embaixo do carrinho com fita crepe|Use outro ímã na mão para empurrar ou puxar sem encostar|Inverta o ímã para trocar entre atrair e repelir",
+e45:"Cole a fita de cobre em quadrado no papel-cartão, deixando 2 aberturas|Numa abertura, coloque a bateria (− na fita) e feche o + com outra tira|Na outra abertura, coloque o LED com cada perna numa fita|Se não acender, vire o LED. Prenda com durex e decore o cartão",
+e46:"Lixe 4 moedas de um lado (até aparecer o metal claro)|Recorte papelão em rodelas e molhe em água com sal e vinagre|Empilhe: moeda, papelão molhado, moeda...|Encoste as pernas do LED no topo e na base da pilha: acende",
+e47:"Enrole o fio de cobre bem apertado no prego, deixando 20 cm soltos de cada lado|Descasque as pontas (adulto)|Prenda cada ponta num polo da pilha com fita|Aproxime de clipes: o prego vira ímã. Não segure muito tempo: esquenta",
+e48:"Desenhe e recorte personagens e prenda um clipe em cada|Transforme a caixa num teatro|Cole ou amarre um ímã num barbante/palito|Mova o ímã por trás ou por baixo da caixa: os bonecos se mexem",
+e49:"Corte o saquinho de chá, esvazie e abra num tubo|Coloque em pé no prato|Adulto acende o topo com fósforo: quando a chama chega embaixo, ele levanta voo",
+e50:"Espete a tachinha no centro da forma de alumínio e prenda o lápis (borracha na tachinha) como cabo|Esfregue o prato de isopor no pano de lã por 1 minuto|Pegue a forma pelo lápis e encoste no prato|No escuro, veja uma faísca pequena",
+e51:"Dobre o papel quadrado nas 2 diagonais e fure o centro|Corte as diagonais até 1 cm do centro e traga uma ponta de cada lado ao meio|Prenda o cata-vento num canudo e passe um espeto por dentro|Amarre um barbante com clipe na ponta do canudo e sopre: ele enrola o barbante",
+e52:"Adulto faz um furo no fundo de cada lata com prego e martelo|Passe a linha pelos furos e amarre num clipe por dentro|Estique bem a linha|Uma pessoa fala na lata e a outra escuta",
+e53:"Corte um canudo de 10 cm e passe pelo carretel; cole|Passe o palitinho por dentro do canudo|Fure o copinho, amarre e pendure no palito|Estique uma linha inclinada entre 2 pontos e deixe o carrinho descer",
+e54:"Encha o balão sem amarrar e prenda com prendedor|Prenda um canudo no balão com fita|Passe uma linha pelo canudo, ou mire direto nos copos empilhados|Solte e veja quantos copos derruba",
+e55:"Recorte o chassi de papelão|Faça furos nas tampinhas (adulto) e passe espetos como eixos dentro de canudos|Cole os canudos-eixo embaixo do chassi|Prenda um balão num canudo com fita e cole em cima|Encha pelo canudo, solte e o carro anda",
+e56:"Monte um percurso no papel e marque um alvo|Prenda os espelhos em pé com clipes|Aponte o laser e ajuste os espelhos até o feixe chegar ao alvo|Nunca aponte nos olhos",
+e57:"Desenhe o projeto da ponte|Monte com palitos, clipes e prendedores|Apoie entre 2 cadeiras|Coloque livros por cima: quantos aguenta?",
+e58:"Desenhe o percurso na lateral da caixa|Corte canudos ao meio e cole com cola quente formando trilhos com curvas e descidas|Solte a bolinha no topo e cronometre|Ajuste até rolar 10 segundos",
+e59:"Desmonte a caixa e desenhe o caminho|Cole palitos inclinados como rampas|Faça obstáculos com chenille e pompons|Cole copinhos embaixo|Incline no sofá e solte as bolinhas de gude",
+e60:"Corte a ponta do copo-cone e encaixe o canudo dobrável, vedando com fita|Coloque a bolinha no cone|Sopre pelo canudo de baixo para cima: a bolinha flutua",
+e61:"Prenda 2 lápis nas laterais da garrafa deitada (ou pote) com fita|Recorte uma pá de plástico da garrafa de leite|Passe o elástico entre as pontas dos lápis e encaixe a pá no meio|Gire a pá para enrolar e solte na água",
+e62:"Desenhe o projeto do protetor|Monte um 'casulo' para o ovo com o que tiver (canudos, elásticos, sacolas)|Solte de uma altura (adulto)|Veja se o ovo sobreviveu e melhore",
+e63:"Corte canudos de tamanhos diferentes, do maior ao menor|Alinhe lado a lado pelo topo e prenda com fita|Sopre por cima de cada um: canudo maior = som mais grave",
+e64:"Monte um avião com copo-cone e enfeites|Ligue o secador virado para cima apoiado em livros|Coloque o avião no fluxo de ar e conte quanto tempo flutua",
+e65:"Recorte um quadrado ou círculo da sacola|Faça 4 furos nas pontas e amarre 4 barbantes iguais|Amarre os barbantes num copinho com furos|Coloque um brinquedinho, solte do alto e cronometre",
+e66:"Dobre aviões de modelos diferentes|Lance e meça com a fita métrica|Teste colocar moedas presas com fita no nariz|Qual voou mais de 3 m?",
+e67:"Planeje o caminho no papel|Corte os rolos ao meio, abrindo calhas|Cole na parede com fita crepe formando um zigue-zague|Solte o pompom em cima e cronometre",
+e68:"Prenda um rolo de papelão como eixo (entre 2 apoios)|Amarre o barbante no copinho|Passe o barbante por cima do rolo|Coloque peso no copo e puxe a outra ponta para levantar",
+e69:"Desenhe a estrutura|Use palitos de dente para ligar uvas, queijo e marshmallows|Construa a torre mais alta possível no prato",
+e70:"Dobre folhas de papel em cilindro, triângulo e quadrado; prenda com fita|Coloque cada forma em pé|Empilhe livros por cima e veja qual aguenta mais",
+e71:"Corte 2 tiras de papel-cartão (uma maior, outra menor)|Faça um anel com cada e prenda com fita|Prenda um anel em cada ponta do canudo|Lance segurando pelo canudo, anel pequeno na frente",
+e72:"Escolha o corpo (tampinha, CD, papelão redondo)|Faça um furo no centro e passe o eixo (palito, lápis)|Cole com cola quente (adulto)|Gire e cronometre; teste a altura do eixo",
+e73:"Planeje a jangada|Cole canudos lado a lado com cola quente; reforce com canudos cruzados|Coloque na água|Adicione moedas uma a uma até afundar",
+e74:"Faça um círculo de balinhas na borda do prato|Despeje água quente no meio com cuidado|Observe as cores escorrendo até o centro sem misturar",
+e75:"Faça ao ar livre|Fure o fundo do copo com a tachinha e faça 2 furos na borda para pendurar|Amarre o barbante no cabo de vassoura entre 2 cadeiras|Coloque bicarbonato no chão/papel e deixe o copo com vinagre e corante pingar balançando",
+e76:"Encha forminhas de gelo com água e corantes de cores primárias|Congele por umas 6 horas|Coloque 2 cubos de cores diferentes juntos no prato branco|Veja a nova cor aparecer enquanto derretem",
+e77:"Estique o filme plástico na tigela, bem esticado, e prenda com elástico|Coloque bolinhas de papel de seda por cima|Coloque a caixinha de som tocando perto, com graves|Veja os papeizinhos 'dançarem'",
+e78:"Coloque leite no prato|Pingue gotas de corante de várias cores|Pingue detergente no meio (ou encoste um cotonete com detergente)|Veja as cores explodirem",
+e79:"Faça uma bolinha com canetinha preta perto da base do filtro|Prenda o filtro num palito com clipe, pendurado no pote|Deixe só a pontinha encostar na água|Veja as cores escondidas na tinta subirem",
+e80:"Coloque papel no fundo do pote|Pingue tinta guache|Coloque objetos de metal (arruelas, clipes) dentro|Mova o ímã por baixo do pote para arrastar e pintar",
+e81:"Num lugar ensolarado, segure o prisma na luz|Gire até aparecer um arco-íris no papel branco|Pinte as cores com lápis de cor na ordem em que aparecem",
+e82:"Misture tinta, água e detergente no copo|Sopre pelo canudo até as bolhas subirem acima da borda (sopre, nunca puxe)|Encoste o papel nas bolhas|Repita com outras cores",
+e83:"Pincele óleo em partes do papel-cartão|Pinte por cima com aquarela|Veja a tinta fugir do óleo e formar desenhos",
+e84:"Coloque o filtro de café no fundo da centrífuga|Pingue gotas de tinta|Feche e gire bem rápido|Abra e veja o desenho",
+e85:"Prenda 3 canetinhas em volta da escova elétrica com fita, como pernas|Tire as tampas|Coloque em pé no papel e ligue|Ajuste as pernas para mudar o desenho",
+e86:"Dobre a cartolina ao meio e abra|Pinte com bastante tinta só de um lado|Dobre de novo, aperte e abra: fica simétrico|Confira a simetria com o espelho",
+e87:"Pinte os cubos de gelo com aquarela|Polvilhe sal por cima|Observe os furinhos e túneis coloridos que aparecem",
+e88:"Coloque os copos em fila|Encha cada um com uma quantidade diferente de água colorida (do vazio ao cheio)|Bata de leve com colher ou lápis|Afine e toque uma música",
+e89:"Meça 20 m com a fita métrica|Uma pessoa cronometra enquanto a outra corre|Divida a distância pelo tempo para achar a velocidade",
+e90:"Coloque a moeda numa superfície plana|Pingue água gota a gota em cima, contando|Veja o 'domo' crescer antes de derramar",
+e91:"Meça a temperatura das 4 latas mornas|Deixe cada uma num lugar: ar, geladeira, água gelada, gelo|Meça a cada 5 min e anote|Faça o gráfico: qual esfria mais rápido?",
+e92:"Coloque a mesma quantidade de água em 2 copos com termômetro|Num, coloque gelo comum; no outro, gelo seco (só adulto, com luva)|Anote a temperatura a cada minuto e compare",
+e93:"Encha a garrafa de água e vire de boca para baixo dentro da tigela com água|Coloque o canudo dentro da garrafa|Respire fundo e sopre tudo de uma vez|Marque quanto ar entrou",
+e94:"Recorte tiras de uma única folha|Faça elos encaixando uma tira na outra e prendendo com fita|Meça a corrente: ficou maior que você?",
+e95:"Empilhe 5 palitos e prenda com elásticos nas pontas|Prenda 2 palitos juntos só numa ponta|Encaixe a pilha entre os 2 palitos (forma de V)|Cole uma tampinha na ponta de cima|Coloque um pompom, abaixe e solte. Meça a distância",
+e96:"Pese o gelo comum e o gelo seco (adulto manuseia com luva)|Pese de novo a cada 15 min|Anote e faça um gráfico comparando",
+e97:"Pese o pacote de pipoca fechado|Estoure no micro-ondas|Pese de novo e compare",
+e98:"Encha os 2 copos com água morna e corante|Marque o nível com fita|Coloque gelo comum num e gelo seco no outro (adulto)|Compare como cada um some",
+e99:"Coloque os 2 termômetros ao sol por 3 min|Coloque um dentro do pote fechado|Anote a temperatura dos dois a cada minuto por 10 min|Compare: dentro do pote esquenta mais",
+e100:"Espete o lápis no centro do prato de papel|Coloque ao sol e prenda com livro ou garrafa|A cada hora, marque onde a sombra está e escreva a hora",
+e101:"Monte uma rampa com o rolo de papelão apoiado no banquinho|Meça o ângulo com o transferidor|Solte o carrinho e meça até onde vai|Mude o ângulo e compare",
+e102:"Faça ao ar livre|Abra a garrafa de refrigerante diet|Solte várias balas Mentos de uma vez e afaste-se|Depois meça quanto refrigerante sobrou",
+
+s01:"Corte as peças da lixeira no papelão (medidas no PDF)|Monte a caixa e a alavanca com espetos|Cole a 'boca' do jacaré na alavanca|Decore com folhas coloridas|Teste: pisa na alavanca e a boca abre",
+s02:"Adulto faz um furo na tampa da garrafa|Encaixe o gatilho do borrifador na garrafa|Vede com cola quente|Encha de água e brinque",
+s03:"Corte o tabuleiro de papelão (40 × 24 cm)|Faça as laterais e os gols|Recorte 12 círculos e cole em pares (6 jogadores)|Passe o elástico pelos furos laterais para lançar a bolinha|Decore e jogue",
+s04:"Desenhe sua mão no papelão e recorte|Marque as dobras dos dedos e dobre|Cole pedaços de canudo nos dedos e na palma|Passe a linha com agulha por dentro dos canudos de cada dedo|Puxe as linhas: os dedos dobram",
+s05:"Marque e recorte uma janela no meio da garrafa (adulto)|Pinte o rolo de papelão e encaixe como ocular|Cole o EVA e o papel-cartão como base e plataforma|Cole tampinhas como botões|Pinte e decore",
+s06:"Pinte a caixa de ovos dos 2 lados com guache|Espete as varetas como mastros|Recorte e encaixe as velas de papel|Desenhe a bandeira pirata",
+s07:"Desenhe o pássaro e a base de balanço no papelão|Recorte as peças|Pinte|Cole o olhinho e as bases com cola quente|Coloque os pinos (espetos) e balance",
+s08:"Recorte a luva para formar a água-viva com tentáculos|Encha a garrafa com água e corante azul|Coloque a luva dentro com um pouquinho de ar|Feche e vire a garrafa",
+s09:"Imprima o molde|Copie no papelão e recorte|Corte 4 retângulos de 12 × 3 cm e monte o corpo|Encaixe asas e cauda e cole|Decore e lance com elástico",
+s10:"Corte o fundo de uma garrafa e o gargalo da outra|Encaixe as partes|Prenda os elásticos com barbante para fazer o disparador|Coloque a bolinha, puxe e solte",
+s11:"Passe fita crepe nas pontas dos rolos|Cole a rolha entre os 2 rolos|Pinte com guache|Faça um furo na lateral de cada rolo e passe o barbante como alça",
+s12:"Cole os palitos lado a lado como chassi|Passe os espetos por dentro dos canudos e cole as tampinhas como rodas|Cole os eixos no chassi|Cole as pilhas usadas para dar peso|Prenda os elásticos nas alavancas da frente e de trás e solte",
+s13:"Recorte as paredes de papelão (13 × 15 cm)|Monte a casa com cola quente|Faça o telhado com folhas secas|Modele a base de massinha marrom|Desenhe portas e janelas com caneta branca",
+s14:"Desenhe uma cesta no papel e recorte|Cole fita dupla face|Grude folhas e flores secas por cima|Faça detalhes com caneta marrom",
+s15:"Desenhe o rosto e o pescoço do flamingo no papel|Modele o corpo com massinha rosa|Use o garfo para fazer textura de penas|Monte e decore",
+s16:"Desenhe a cabeça da raposa no papel e recorte|Cole folhas secas por cima|Cole olhos móveis e o botão como nariz|Faça os detalhes com caneta branca|Cole no palito de picolé",
+
+a01:"Corte ~13 cm de fita washi e deixe com a cola para cima|Coloque o alfinete no meio, cabeça para fora|Dobre a fita ao redor do alfinete|Corte um triângulo na ponta para virar bandeirinha|Espete no mapa nos lugares que já foram ou querem ir",
+a02:"Corte o topo de alguns sacos para terem alturas diferentes|Com fita washi, faça portas e janelas|Corte papel-cartão para os telhados e dobre ao meio|Recheie os sacos com jornal, coloque os telhados e monte a cidade",
+a03:"Cubra o papel manteiga com tiras de fita washi|Vire e desenhe formas no lado do papel|Recorte|Descole o papel manteiga e cole onde quiser",
+a04:"Desenhe 48 quadrados de 6,35 cm na cartolina e recorte|Recorte pares de quadrados iguais nos papéis estampados|Cole cada estampado num quadrado com fita dupla face|Embaralhe e jogue",
+a05:"Corte o topo das revistas em alturas diferentes|Dobre o canto de cada página até a lombada, página por página|Feche a capa com fita dupla face|Junte várias para formar uma cordilheira",
+a06:"Desenhe uma máscara (formato de 8 deitado) e recorte|Marque e recorte os olhos|Decore com formas coloridas usando fita dupla face|Fure as laterais e amarre a lã",
+a07:"Desmonte a caixa|Desenhe formas no papelão e recorte|Decore com fita washi|Corte fendas de ~1,3 cm|Encaixe as peças e construa",
+a08:"Achate o saco; a aba de baixo vira a boca|Recorte olhos, nariz e dentes no papel colorido|Faça o cabelo com franja de tiras|Cole tudo com fita dupla face e anime",
+a09:"Desenhe 4 cactos iguais no papel-cartão e recorte|Dobre cada um ao meio|Cole em pares e depois junte os pares (cacto 3D)|Corte fendas no rolo e encaixe o cacto como vaso",
+a10:"Dobre a folha ao meio no comprimento|Dobre em triângulos até o fim da tira|Encaixe a aba final para travar|Faça o gol com os dedos e jogue com petelecos",
+a11:"Corte os canudos em pedaços de 7,6 cm|Monte 8 pedaços em estrela e prenda com fita|Trace e recorte círculos grandes, médios e pequenos|Cole os círculos dos 2 lados do centro",
+a12:"Corte um prato ao meio|Cole um círculo de papel-cartão no prato inteiro|Decore o meio prato com fita washi|Cole o meio prato por cima formando o bolso|Faça uma alça de lã atrás para pendurar",
+a13:"Corte 4 retângulos de 11,4 × 15,2 cm|Dobre cada um em sanfona|Dobre ao meio e cole formando 4 leques|Una os leques numa roseta|Cole círculos no centro e 2 fitas penduradas",
+a14:"Corte 7 retângulos de 12,7 × 20,3 cm|Corte o saco de papel para ~12,7 cm|Dobre tudo ao meio e empilhe com o saco entre as folhas|Prenda a lombada com os 2 elásticos",
+a15:"Faça rolinhos enrolando tiras de papel no lápis|Recorte a moldura no papelão (15 × 20 cm, janela de 10 × 15 cm)|Cole canudos e rolinhos alternados nos lados|Prenda a foto atrás com fita",
+a16:"Desmonte a caixa|Desenhe corpo (~25 cm), asa (~20 cm) e cauda|Recorte e faça as fendas|Encaixe asa e cauda e decore com fita washi",
+a17:"Recorte 50 tiras de 4 × 20 cm em 5 tons|Faça elos do tom mais escuro ao mais claro|Monte 5 correntes de 10 elos|Prenda no rolo de papelão e pendure com lã",
+a18:"Faça um quadrado com a folha|Dobre os 4 cantos ao centro, vire e dobre de novo|Escreva cores fora, números e mensagens dentro|Encaixe os dedos e brinque",
+a19:"Trace 4 círculos iguais para cada planeta e para o Sol|Recorte e dobre ao meio|Cole as metades formando esferas 3D|Passe a lã com a agulha e monte o móbile",
+a20:"Corte uma tira de papel-cartão do tamanho da fita|Faça confetes com o furador|Lamine a frente com 2 tiras de fita, coladas cola com cola|Coloque os confetes entre a fita e o papel e sele as bordas",
+a21:"Desenhe uma borda de 2,5 cm no papel-cartão|Dobre ao meio e corte linhas a partir da dobra, sem cortar a borda|Corte tiras de papel e de revista|Teça passando por cima e por baixo, alternando|Prenda as pontas atrás",
+a22:"Recorte 8 tiras de 3,8 × 20 cm em 2 tons de verde|Fure círculos com moeda em 4 tiras|Faça elos alternando as cores|Recorte e cole a cabeça",
+a23:"Corte tiras de fita crepe de 30 cm e dobre ao meio|Faça franjas|Cole em camadas no prato até cobrir|Faça as 'costuras' com fita branca e recheie com docinhos",
+a24:"Dobre as folhas ao meio e marque 2 linhas horizontais (3 partes)|Desenhe a mesma cabeça em todas|Corte as páginas em 3 faixas até a lombada|Decore: cabelos em cima, olhos no meio, bocas embaixo|Prenda com elástico e misture as caras",
+a25:"Empilhe 9 sacos com a abertura para o mesmo lado|Corte triângulos nas laterais|Cole com fita dupla face em formato de T entre os sacos|Abra em círculo e prenda com clipe",
+a26:"Monte 4 quadrados com 4 palitos cada|Recorte o guardanapo e cole em cada quadrado|Una os quadrados formando a lanterna|Coloque a velinha de LED dentro",
+a27:"Desenhe o corpo, as asas e os pés e recorte|Recorte olho, dentes e barriga em outras cores e cole|Prenda o canudo pequeno nas costas com fita|Encaixe no canudo maior e sopre para voar",
+a28:"Corte os rolos em pedaços e abra de um lado|Faça vários furinhos com o furador|Passe cola e cole papel de seda por dentro|Feche de novo com fita|Encaixe nas lâmpadas do cordão de LED (só LED)",
+
+k01:"Imprima as folhas do Caderno das Emoções|Faça uma por dia, de 10 a 15 min|Converse sobre o que a criança desenhou ou escreveu, sem corrigir",
+k02:"Imprima o Caderno da Calma|Pratique as respirações (estrela, cheirinho da flor) num momento tranquilo|Monte com a criança o 'Meu plano da calma'|Recorte os cartões da calma e deixe à vista",
+k03:"Imprima os desafios de foco|Escolha 1 por dia (labirinto, pares, diferenças, padrões)|Use um timer curto e aumente aos poucos",
+k04:"Imprima as rotinas de manhã, depois da escola e de noite|Recorte e monte junto com a criança|Cole na parede na altura dela|Revise a rotina com a criança no dia a dia",
+k05:"Imprima as ideias sem tela|Escolha uma por dia (construir com papel, caça em casa, cabana)|Combine o tempo antes de começar",
+k06:"Imprima os cards|Recorte (plastifique, se puder)|Guarde num envelope ou argola e use quando a emoção aparecer",
+k07:"Imprima os cartazes|Cole com fita em lugares visíveis (quarto, geladeira)|Monte o cantinho da calma com almofada e os cards",
+d00:"Imprima o desafio|Preencham juntos o combinado da família|Façam 1 dia por vez e marquem na trilha|No dia 14, entreguem o certificado",
+d05:"Faça 2 furos alinhados em cada lado do copo|Passe um palito em cima e outro embaixo|Ligue os 2 palitos com o elástico|Prenda a hélice de papel no palito de cima e gire o de baixo",
+d08:"Coloque 2 apoios (copos ou livros) separados|Ponha uma folha reta por cima e teste com moedas|Dobre outra folha em sanfona e teste de novo|Conte quantas moedas cada uma aguenta",
+d11:"Escolha o corpo do robô (caixa ou rolo)|Adicione braços, olhos e detalhes|Decore e dê um nome|Invente uma função para ele",
+d12:"Desenhe uma flor no papel e recorte|Dobre as pétalas para dentro|Coloque na água e veja abrir"
+};
+// Buscas de vídeo personalizadas (o resto usa o título)
+const V = {
+ r06:"motor homopolar pilha ímã fio de cobre", r02:"LED throwie como fazer", r07:"robô rabiscador motor vibratório", r13:"555 timer som fotoresistor protoboard",
+ r17:"robô que não cai da mesa sensor mecânico", r18:"robô quadrúpede palito de picolé motor", r19:"robô hexápode palito de picolé", r20:"robô bípede palito motor caixa de redução",
+ e08:"oobleck amido de milho experiência", e16:"pasta de dente de elefante experiência crianças", e49:"saquinho de chá voando experiência", e102:"mentos coca diet experiência",
+ e46:"bateria de moedas acender LED", e43:"bateria de limão acender LED", a18:"come-come de papel origami", a10:"futebol de papel origami peteleco"
+};
+
 </script>
 <script>
 (function(){
@@ -619,6 +820,9 @@ function missing(a){ return a.mats.filter(m=>!m.opt && has(m.id)!==1); }
 function level(a){ const n = missing(a).length; return n===0?"ready":(n<=2?"near":"far"); }
 
 // ---------- UI state ----------
+const OPEN = new Set();
+const SUF = {rob:" robô caseiro como fazer",exp:" experimento para crianças",rec:" reciclável para crianças",art:" artesanato de papel crianças",kit:" crianças atividade",dia:" crianças como fazer"};
+function ytq(a){ return "https://www.youtube.com/results?search_query="+encodeURIComponent(V[a.id] || (a.title.replace(/\(.*?\)/g,"").replace(/^Dia \d+: /,"").trim()+SUF[a.book])); }
 const ui = { q:"", book:"all", st:"all", hideDone:false, invQ:"", onlyUnk:false, buyBook:"all" };
 
 // ---------- persistence ----------
@@ -709,8 +913,11 @@ function viewActs(){
       <div class="top"><h3>${esc(a.title)}</h3><span class="pill ${l}">${pill}</span></div>
       <div class="meta"><span>${esc(BOOKS[a.book].name)} · pág. ${a.page}</span><span>${esc(a.time)}</span><span>${DIFF[a.diff]}</span>${a.adult?'<span class="adult">com adulto</span>':""}</div>
       <div class="mats">${mats}</div>
-      <div class="foot"><span class="hint">PDF: ${esc(BOOKS[a.book].file)}</span>
+      <div class="foot"><button class="btn primary" data-how="${a.id}" aria-expanded="${OPEN.has(a.id)}">${OPEN.has(a.id)?"Fechar":"Como fazer"}</button>
         <button class="btn ${done?"done":""}" data-done="${a.id}">${done?"Feita em "+done.split("-").reverse().slice(0,2).join("/"):"Marcar como feita"}</button></div>
+      ${OPEN.has(a.id)?`<div class="how"><ol>${(S[a.id]||"").split("|").filter(Boolean).map(t=>`<li>${esc(t)}</li>`).join("")}</ol>
+        <p class="pdf">Medidas, fotos e detalhes: PDF <b>${esc(BOOKS[a.book].file)}</b>, página ${a.page}.</p>
+        <div class="links"><a class="btn yt" href="${ytq(a)}" target="_blank" rel="noopener">▶ Ver vídeos no YouTube</a></div></div>`:""}
     </article>`;
   }).join("");
 
@@ -719,7 +926,7 @@ function viewActs(){
     <div class="chips" role="group" aria-label="Livro">${bookChips}</div>
     <div class="bar"><div class="chips" role="group" aria-label="Situação" style="margin:0">${st}</div>
       <label class="tog"><input type="checkbox" id="hideDone" ${ui.hideDone?"checked":""}> esconder as já feitas</label></div>
-    <p class="hint" style="margin:0 0 10px">${list.length} atividade${list.length===1?"":"s"}. Toque num material para marcar se tem (✓) ou não tem (✗). Cinza tracejado (?) = ainda não conferido.</p>
+    <p class="hint" style="margin:0 0 10px">${list.length} atividade${list.length===1?"":"s"}. Toque em <b>Como fazer</b> para ver o passo a passo e vídeos. Toque num material para marcar se tem (✓) ou não (✗); tracejado (?) = não conferido.</p>
     <div class="list">${cards || '<div class="empty">Nenhuma atividade com esse filtro.</div>'}</div>`;
 }
 
@@ -811,6 +1018,7 @@ document.addEventListener("click", async e=>{
   if(b.dataset.buybook){ ui.buyBook=b.dataset.buybook; render(); return; }
   if(b.dataset.mat){ const id=b.dataset.mat, v=has(id); setHave(id, v===1?0:1); toast(M[id][0]+": "+(v===1?"não tenho":"tenho")); return; }
   if(b.dataset.set){ const id=b.dataset.set, v=+b.dataset.v; setHave(id, state.h[id]===v && route()==="estoque" ? undefined : v); return; }
+  if(b.dataset.how){ const id=b.dataset.how; OPEN.has(id)?OPEN.delete(id):OPEN.add(id); render(); return; }
   if(b.dataset.done){ const id=b.dataset.done; if(state.done[id]) delete state.done[id]; else { const d=new Date(); state.done[id]=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); } persist(); render(); return; }
   if(b.id==="sortear"){
     const pool = ACTS.filter(a=>level(a)==="ready" && !state.done[a.id] && (ui.book==="all"||a.book===ui.book));
